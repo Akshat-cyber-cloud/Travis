@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Preloader from "./Preloader";
 import DifferentShapeSection from "./DifferentShapeSection";
 import PacksSection from "./PacksSection";
 import BentoSection from "./BentoSection";
@@ -13,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function LandingPage() {
   const heroRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   /* ── 1. Lenis Luxury Smooth Scroll & GSAP Synchronization ── */
   useEffect(() => {
@@ -23,7 +25,6 @@ export default function LandingPage() {
       touchMultiplier: 2,
     });
 
-    // Synchronize Lenis scroll position with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
     const updateLenis = (time) => {
@@ -39,7 +40,12 @@ export default function LandingPage() {
     };
   }, []);
 
-  /* ── 2. Mouse Parallax for Hero Floating UI ── */
+  /* ── 2. Trigger Smooth Entrance when Preloader Curtain Opens ── */
+  const handlePreloaderComplete = () => {
+    setIsLoaded(true);
+  };
+
+  /* ── 3. Mouse Parallax for Hero Floating UI ── */
   useEffect(() => {
     const hero = heroRef.current;
     if (!hero) return;
@@ -55,7 +61,7 @@ export default function LandingPage() {
     return () => hero.removeEventListener("mousemove", onMove);
   }, []);
 
-  /* Smooth scroll to section helper */
+  /* Smooth scroll helper */
   const scrollToSection = (e, id) => {
     e.preventDefault();
     const elem = document.getElementById(id);
@@ -65,17 +71,18 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="lp-root">
-      {/* ── Top Notch Island Navbar (Circular / React Bits Pro Style) ── */}
+    <div className={`lp-root ${isLoaded ? "lp-root--loaded" : ""}`}>
+      {/* ── 3-Word Preloader (WELCOME -> TO -> TRAVIS.) ── */}
+      <Preloader onComplete={handlePreloaderComplete} />
+
+      {/* ── Top Notch Island Navbar ── */}
       <header className="lp-header-wrap">
         <nav className="lp-island-nav">
-          {/* Brand Logo */}
           <a href="#" className="lp-island-brand" onClick={(e) => scrollToSection(e, "hero")}>
             <span className="lp-island-dot" />
             <span className="lp-island-brand-name">Travis</span>
           </a>
 
-          {/* Navigation Links */}
           <ul className="lp-island-menu">
             <li>
               <a href="#product" className="lp-island-link" onClick={(e) => scrollToSection(e, "product")}>
@@ -105,7 +112,6 @@ export default function LandingPage() {
             </li>
           </ul>
 
-          {/* Actions */}
           <div className="lp-island-actions">
             <a href="#docs" className="lp-island-signin" onClick={(e) => scrollToSection(e, "docs")}>Sign in</a>
             <a href="#contact" className="lp-island-cta" onClick={(e) => scrollToSection(e, "contact")}>
@@ -118,14 +124,13 @@ export default function LandingPage() {
 
       {/* ── Hero Section ── */}
       <section className="lp-hero" id="hero" ref={heroRef}>
-        {/* Perspective Dotted Background Image */}
         <div
           className="lp-hero__bg-img"
           style={{ backgroundImage: `url('/hero_bg.png')` }}
           aria-hidden="true"
         />
 
-        {/* ── BOTTOM LEFT FLOATING UI GRAPHICS ── */}
+        {/* BOTTOM LEFT FLOATING UI GRAPHICS */}
         <div className="lp-bottom-group lp-bottom-group--left">
           <div className="lp-ui-frame lp-ui-frame--bg-left">
             <img
@@ -143,7 +148,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* ── BOTTOM RIGHT FLOATING UI GRAPHICS ── */}
+        {/* BOTTOM RIGHT FLOATING UI GRAPHICS */}
         <div className="lp-bottom-group lp-bottom-group--right">
           <div className="lp-ui-frame lp-ui-frame--bg-right">
             <img
@@ -161,15 +166,13 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* ── HERO CENTER CONTENT ── */}
+        {/* HERO CENTER CONTENT */}
         <div className="lp-hero__content">
-          {/* Top Pill Badge */}
           <div className="lp-pill">
             <span>Now in Early Access</span>
             <span className="lp-pill__plus">✦</span>
           </div>
 
-          {/* Main Headline (Editorial Typography with Italic Serif Accent) */}
           <h1 className="lp-hero__headline">
             <span className="headline-line-1">The AI that</span>
             <span className="headline-line-2">
@@ -177,14 +180,12 @@ export default function LandingPage() {
             </span>
           </h1>
 
-          {/* Subheading */}
           <p className="lp-hero__subheading">
             Travis is the operating system for ops-heavy businesses and industries.
             It runs your workflows end to end — the ones your team actually depends on.
             Not a chat box for one person. <strong>One agent for your whole team.</strong>
           </p>
 
-          {/* Call to Action Buttons */}
           <div className="lp-hero__cta-group">
             <a href="#contact" className="lp-btn-split" onClick={(e) => scrollToSection(e, "contact")}>
               <span className="lp-btn-split__text">Get Started</span>
@@ -195,7 +196,6 @@ export default function LandingPage() {
             </a>
           </div>
 
-          {/* Trust Note */}
           <p className="lp-hero__trust-note">No credit card required · Free to try</p>
         </div>
       </section>
@@ -205,7 +205,7 @@ export default function LandingPage() {
         <DifferentShapeSection />
       </div>
 
-      {/* ── Section 2: "One Travis. Many packs." (4 Pinned Cards with Connecting Path) ── */}
+      {/* ── Section 2: "One Travis. Many packs." ── */}
       <div id="industries">
         <PacksSection />
       </div>
@@ -215,12 +215,12 @@ export default function LandingPage() {
         <BentoSection />
       </div>
 
-      {/* ── Section 4: Featured Questions Scroll (3 Featured Posters Switcher) ── */}
+      {/* ── Section 4: Featured Questions Scroll ── */}
       <div id="docs">
         <FaqScrollSection />
       </div>
 
-      {/* ── Section 5: CTA Waitlist Card & Giant TRAVIS. Watermark Footer ── */}
+      {/* ── Section 5: CTA Waitlist Card & Footer ── */}
       <div id="contact">
         <CtaFooterSection />
       </div>
