@@ -1,0 +1,379 @@
+/* ══════════════════════════════════════════════════════
+   PACKS SECTION: "One Travis. Many packs."
+   4 Pinned Tactile Cards with Traveling Animated Pin & Path on Scroll
+   ══════════════════════════════════════════════════════ */
+
+.packs-section {
+  position: relative;
+  width: 100%;
+  padding: 120px 24px 180px;
+  background-color: #fbfbfd;
+  color: #08090c;
+  overflow: hidden;
+}
+
+/* Notebook / Ruled Faint Lines Pattern */
+.packs-bg-ruled {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to bottom, transparent 96%, rgba(8, 9, 12, 0.04) 96%),
+    radial-gradient(circle, rgba(8, 9, 12, 0.04) 1px, transparent 1px);
+  background-size: 100% 48px, 24px 24px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.packs-container {
+  position: relative;
+  z-index: 10;
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.packs-header {
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.packs-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  background: rgba(8, 9, 12, 0.04);
+  border: 1px solid rgba(8, 9, 12, 0.12);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #08090c;
+  text-transform: uppercase;
+}
+
+.packs-kicker__dot {
+  width: 6px;
+  height: 6px;
+  background: #08090c;
+  border-radius: 50%;
+}
+
+.packs-title {
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  color: #08090c;
+}
+
+.packs-title-emphasis {
+  color: #08090c;
+  font-weight: 900;
+}
+
+.packs-subtitle {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.65;
+  color: #4a4f5c;
+  font-weight: 500;
+  max-width: 720px;
+}
+
+/* ── Flow Container with SVG Path & Cards ── */
+.packs-flow-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 1300px;
+}
+
+/* SVG Connecting Path */
+.packs-path-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.packs-path-track-faint {
+  stroke: rgba(8, 9, 12, 0.12);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 6;
+  fill: none;
+}
+
+.packs-path-track-active {
+  stroke: #08090c;
+  stroke-width: 3.5;
+  fill: none;
+  stroke-linecap: round;
+}
+
+
+
+/* ── 4 Pinned Cards Grid (Zig-Zag Placement) ── */
+.packs-cards-grid {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+}
+
+.pack-card-wrapper {
+  position: absolute;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Position 1: Top Left */
+.pack-card-wrapper--1 {
+  top: 40px;
+  left: 5%;
+  transform: rotate(-3.5deg);
+}
+
+/* Position 2: Mid-Upper Right */
+.pack-card-wrapper--2 {
+  top: 360px;
+  right: 5%;
+  transform: rotate(3deg);
+}
+
+/* Position 3: Mid-Lower Left */
+.pack-card-wrapper--3 {
+  top: 700px;
+  left: 3%;
+  transform: rotate(-2.5deg);
+}
+
+/* Position 4: Bottom Right */
+.pack-card-wrapper--4 {
+  top: 1020px;
+  right: 5%;
+  transform: rotate(3.5deg);
+}
+
+/* ── 3D Pushpins ── */
+.pack-pushpin {
+  position: relative;
+  z-index: 10;
+  width: 28px;
+  height: 32px;
+  margin-bottom: -16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pushpin-cap {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.7);
+  position: relative;
+  z-index: 2;
+}
+
+/* Pushpin Colors */
+.pack-pushpin--coral .pushpin-cap {
+  background: radial-gradient(circle at 35% 35%, #ff7043, #d84315);
+}
+
+.pack-pushpin--blue .pushpin-cap {
+  background: radial-gradient(circle at 35% 35%, #42a5f5, #1565c0);
+}
+
+.pack-pushpin--purple .pushpin-cap {
+  background: radial-gradient(circle at 35% 35%, #ab47bc, #6a1b9a);
+}
+
+.pack-pushpin--emerald .pushpin-cap {
+  background: radial-gradient(circle at 35% 35%, #26a69a, #00695c);
+}
+
+.pushpin-shaft {
+  width: 4px;
+  height: 10px;
+  background: linear-gradient(to right, #9e9e9e, #e0e0e0, #757575);
+  margin-top: -2px;
+  z-index: 1;
+}
+
+.pushpin-shadow {
+  position: absolute;
+  bottom: 0;
+  width: 20px;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+/* ── Paper Card ── */
+.pack-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px 28px 28px;
+  box-shadow: 
+    0 16px 36px -8px rgba(8, 9, 12, 0.09),
+    0 2px 10px rgba(8, 9, 12, 0.04),
+    0 0 0 1px rgba(8, 9, 12, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.pack-card-wrapper:hover .pack-card {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 
+    0 24px 50px -10px rgba(8, 9, 12, 0.14),
+    0 0 0 1.5px rgba(8, 9, 12, 0.12);
+}
+
+/* Card Top: Number & Status Badge */
+.pack-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pack-card__number {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: #08090c;
+  opacity: 0.85;
+}
+
+.pack-card__badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.pack-card__badge--live {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.pack-card__badge--active {
+  background: rgba(8, 9, 12, 0.06);
+  color: #08090c;
+  border: 1px solid rgba(8, 9, 12, 0.12);
+}
+
+.pack-card__badge--ready {
+  background: rgba(124, 58, 237, 0.08);
+  color: #7c3aed;
+  border: 1px solid rgba(124, 58, 237, 0.18);
+}
+
+.pack-card__badge--secure {
+  background: rgba(2, 132, 199, 0.08);
+  color: #0284c7;
+  border: 1px solid rgba(2, 132, 199, 0.18);
+}
+
+/* Title & Description */
+.pack-card__title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #08090c;
+  line-height: 1.15;
+}
+
+.pack-card__desc {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: #525866;
+}
+
+/* Bullet Items */
+.pack-card__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(8, 9, 12, 0.06);
+}
+
+.pack-card__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: #1a1c24;
+  font-weight: 600;
+}
+
+.pack-card__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #08090c;
+  flex-shrink: 0;
+}
+
+/* CTA Link */
+.pack-card__cta {
+  margin-top: 8px;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #08090c;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.pack-card__cta:hover {
+  gap: 8px;
+  text-decoration: underline;
+}
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+@media (max-width: 960px) {
+  .packs-flow-wrapper {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .packs-path-svg {
+    display: none;
+  }
+
+
+
+  .pack-card-wrapper {
+    position: relative;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,225 @@
+/* ══════════════════════════════════════════════════════
+   FAQ SCROLL SECTION: Featured Poster Image Switcher
+   Featured1.png (default active), Featured2.png, Featured3.png
+   ══════════════════════════════════════════════════════ */
+
+.faq-scroll-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding: 30px 24px;
+  background-color: #fbfbfd;
+  color: #08090c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.faq-bg-mesh {
+  position: absolute;
+  inset: 0;
+  background-size: 32px 32px;
+  background-image: 
+    radial-gradient(circle, rgba(8, 9, 12, 0.04) 1px, transparent 1px);
+  pointer-events: none;
+}
+
+.faq-scroll-container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── Header ── */
+.faq-header {
+  text-align: center;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.faq-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 14px;
+  background: rgba(8, 9, 12, 0.04);
+  border: 1px solid rgba(8, 9, 12, 0.12);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #08090c;
+  text-transform: uppercase;
+}
+
+.faq-kicker__dot {
+  width: 6px;
+  height: 6px;
+  background: #08090c;
+  border-radius: 50%;
+}
+
+.faq-section-title {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  color: #08090c;
+}
+
+.faq-section-subtitle {
+  font-size: 0.9rem;
+  color: #4a4f5c;
+  font-weight: 500;
+}
+
+/* ── FEATURED POSTER STAGE ── */
+.featured-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 680px;
+}
+
+.featured-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.featured-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.96) translateY(12px);
+  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0.45s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.featured-slide--active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(1) translateY(0) !important;
+  pointer-events: auto !important;
+  z-index: 10 !important;
+}
+
+.featured-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 20px 48px rgba(8, 9, 12, 0.16));
+}
+
+/* ── CONTROLS & PILLS ── */
+.featured-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 520px;
+  padding: 6px 14px;
+  background: #ffffff;
+  border: 1px solid rgba(8, 9, 12, 0.1);
+  border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(8, 9, 12, 0.05);
+}
+
+.featured-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.featured-pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(8, 9, 12, 0.12);
+  background: #f8fafc;
+  color: #64748b;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.featured-pill-btn:hover {
+  background: #f1f5f9;
+  color: #08090c;
+}
+
+.featured-pill-btn--active {
+  background: #08090c !important;
+  color: #ffffff !important;
+  border-color: #08090c !important;
+  box-shadow: 0 4px 12px rgba(8, 9, 12, 0.2);
+}
+
+.featured-scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.hint-arrow {
+  font-size: 0.88rem;
+  animation: bounceHint 1.4s infinite ease-in-out;
+}
+
+@keyframes bounceHint {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+@media (max-width: 768px) {
+  .faq-scroll-section {
+    height: auto;
+    padding: 60px 16px 80px;
+  }
+
+  .featured-image-wrapper {
+    height: 380px;
+  }
+
+  .featured-controls {
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 14px;
+    padding: 8px 12px;
+  }
+}

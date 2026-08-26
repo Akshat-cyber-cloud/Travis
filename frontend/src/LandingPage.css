@@ -1,0 +1,457 @@
+/* ══════════════════════════════════════════════════════
+   TRAVIS LANDING PAGE — Hero Section (LandingPage.css)
+   Notched Island Navbar & Editorial Display Typography
+   ══════════════════════════════════════════════════════ */
+
+:root {
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+
+  --bg-color: #fbfbfd;
+  --text-main: #08090c;
+  --text-muted: #4a4f5c;
+  --text-light: #7c8292;
+
+  --nav-bg: #08090c;
+  --accent-lime: #84cc16;
+  --accent-lime-light: #a3e635;
+
+  --radius-pill: 999px;
+  --radius-btn: 12px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lp-root {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ══ NOTCHED ISLAND DARK NAVBAR (Circular SaaS Style) ══ */
+.lp-header-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.lp-island-nav {
+  pointer-events: auto;
+  position: relative;
+  background: var(--nav-bg);
+  color: #ffffff;
+  height: 56px;
+  padding: 0 10px 0 24px;
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  box-shadow: 0 8px 32px rgba(8, 9, 12, 0.25);
+}
+
+/* Inverted corner cutouts on left and right */
+.lp-island-nav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border-top-right-radius: 20px;
+  box-shadow: 6px -6px 0 6px var(--nav-bg);
+  pointer-events: none;
+}
+
+.lp-island-nav::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -20px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border-top-left-radius: 20px;
+  box-shadow: -6px -6px 0 6px var(--nav-bg);
+  pointer-events: none;
+}
+
+/* Brand Logo */
+.lp-island-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lp-island-dot {
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.lp-island-brand-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+/* Menu Links */
+.lp-island-menu {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.lp-island-link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.lp-island-link svg {
+  opacity: 0.7;
+}
+
+.lp-island-link:hover {
+  color: #ffffff;
+}
+
+/* Right Actions */
+.lp-island-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 10px;
+}
+
+.lp-island-signin {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #9ca3af;
+  transition: color 0.2s ease;
+}
+
+.lp-island-signin:hover {
+  color: #ffffff;
+}
+
+/* Dual-Tone CTA Button */
+.lp-island-cta {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  color: #08090c;
+  border-radius: var(--radius-pill);
+  padding: 3px 3px 3px 16px;
+  gap: 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lp-island-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25);
+}
+
+.lp-island-cta-arrow {
+  width: 28px;
+  height: 28px;
+  background: var(--accent-lime);
+  color: #08090c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+/* ══ HERO SECTION ══════════════════════════════════════ */
+.lp-hero {
+  position: relative;
+  min-height: 94vh;
+  padding: 160px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  --mx: 0px;
+  --my: 0px;
+}
+
+/* Perspective Dotted Background Image */
+.lp-hero__bg-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ══ BOTTOM FLOATING UI GRAPHICS (DUAL-LAYER) ════════ */
+.lp-bottom-group {
+  position: absolute;
+  z-index: 10;
+  transition: transform 0.5s ease-out;
+  transform: translate(var(--mx), var(--my));
+  pointer-events: none;
+}
+
+.lp-bottom-group--left {
+  bottom: -40px;
+  left: -20px;
+  width: 480px;
+  height: 380px;
+}
+
+.lp-bottom-group--right {
+  bottom: -40px;
+  right: -20px;
+  width: 480px;
+  height: 380px;
+}
+
+.lp-ui-frame {
+  position: absolute;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px -10px rgba(8, 9, 12, 0.14), 0 4px 16px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: #ffffff;
+}
+
+.lp-ui-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Left Background Dashboard */
+.lp-ui-frame--bg-left {
+  width: 380px;
+  top: 20px;
+  left: 30px;
+  transform: rotate(-10deg);
+  opacity: 0.95;
+}
+
+/* Left Foreground Overlapping Card */
+.lp-ui-frame--fg-left {
+  width: 260px;
+  bottom: 60px;
+  left: 170px;
+  transform: rotate(-3deg);
+  z-index: 2;
+  box-shadow: 0 30px 70px -12px rgba(8, 9, 12, 0.18);
+}
+
+/* Right Background Dashboard */
+.lp-ui-frame--bg-right {
+  width: 380px;
+  top: 20px;
+  right: 30px;
+  transform: rotate(10deg);
+  opacity: 0.95;
+}
+
+/* Right Foreground Overlapping Card */
+.lp-ui-frame--fg-right {
+  width: 270px;
+  bottom: 70px;
+  right: 170px;
+  transform: rotate(3deg);
+  z-index: 2;
+  box-shadow: 0 30px 70px -12px rgba(8, 9, 12, 0.18);
+}
+
+/* ══ HERO CENTER CONTENT ══════════════════════════════ */
+.lp-hero__content {
+  position: relative;
+  z-index: 25;
+  max-width: 880px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+/* Pill Badge */
+.lp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: #ffffff;
+  border: 1px solid rgba(8, 9, 12, 0.12);
+  border-radius: var(--radius-pill);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #08090c;
+  box-shadow: 0 2px 10px rgba(8, 9, 12, 0.04);
+}
+
+.lp-pill__plus {
+  color: var(--accent-lime);
+  font-size: 0.85rem;
+}
+
+/* Editorial Headline Typography */
+.lp-hero__headline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.05;
+}
+
+.headline-line-1 {
+  font-size: clamp(3.4rem, 6.8vw, 5.8rem);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  color: #08090c;
+}
+
+.headline-line-2 {
+  font-size: clamp(3.4rem, 6.8vw, 5.8rem);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  color: #08090c;
+}
+
+.headline-serif-italic {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--accent-lime);
+  padding: 0 4px;
+}
+
+/* Subheading */
+.lp-hero__subheading {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 660px;
+  font-weight: 500;
+}
+
+.lp-hero__subheading strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+/* Split CTA Button Group */
+.lp-hero__cta-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.lp-btn-split {
+  display: inline-flex;
+  align-items: center;
+  background: #08090c;
+  color: #ffffff;
+  border-radius: var(--radius-btn);
+  overflow: hidden;
+  padding: 3px;
+  box-shadow: 0 8px 24px -4px rgba(8, 9, 12, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lp-btn-split:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(8, 9, 12, 0.45);
+}
+
+.lp-btn-split__text {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.lp-btn-split__icon {
+  width: 44px;
+  height: 44px;
+  background: var(--accent-lime);
+  color: #08090c;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.lp-btn-hero-secondary {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-main);
+  background-color: #ffffff;
+  border: 1px solid rgba(8, 9, 12, 0.14);
+  padding: 15px 28px;
+  border-radius: var(--radius-btn);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.lp-btn-hero-secondary:hover {
+  border-color: var(--text-main);
+  background: #fdfdfe;
+  transform: translateY(-2px);
+}
+
+.lp-hero__trust-note {
+  font-size: 0.84rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* ══ RESPONSIVE BREAKPOINTS ══ */
+@media (max-width: 900px) {
+  .lp-island-menu {
+    display: none;
+  }
+
+  .lp-hero {
+    padding-top: 130px;
+  }
+}
