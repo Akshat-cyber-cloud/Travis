@@ -4,6 +4,8 @@ A full-page AI-powered Task Planner web application designed for **Travis AI**. 
 
 ![Travis AI Planner](https://img.shields.io/badge/Status-Completed-success) ![React 19](https://img.shields.io/badge/React-19-blue) ![TypeScript 5](https://img.shields.io/badge/TypeScript-5-blue)
 
+**Live Demo: [https://travis1.netlify.app](https://travis1.netlify.app)**
+
 ---
 
 ## Key Features & Core Flow Alignment
@@ -50,6 +52,7 @@ The application strictly implements and satisfies the complete **Section 3 Core 
 - **Hero Glass Orb & Fluid Dynamics**: 3D translucent glass orb header with rotating internal blue fluid waves (`#0284c7`, `#38bdf8`, `#818cf8`), specular light highlights, and ambient glow.
 - **Collapsible History Sidebar**: Smooth ChatGPT/Claude-style drawer featuring grouped chat history (Today, Yesterday, Last 7 Days), SVG icon branding, quick actions, and collapsible layout.
 - **Zero Scrollbar Policy**: Custom CSS rule hiding browser scrollbars across all scrollable containers (`.planner-page-main`, `.planner-sidebar-scroll`) while keeping smooth scrolling intact.
+- **Dark Mode**: Full dark theme toggle with glowing card effects and consistent design tokens.
 - **Color Palette & Typography**:
   - Primary Accent: `#0284c7` (Sky Blue) & `#84cc16` (Lime Accent)
   - Dark Neutral: `#08090c`
@@ -117,7 +120,7 @@ frontend/src/
 ## Key Technical & Design Decisions
 
 - **Decoupled Asynchronous Mock API (`mockPlanApi.ts`)**: Kept separate from UI code using clean TypeScript interfaces (`PlanData`, `PlanStep`), ensuring real-world async simulation (3000ms delay, error codes, empty states).
-- **Centralized State Machine Hook (`usePlanPlanner.ts`)**: Managed all state transitions (Prompting $\rightarrow$ Loading $\rightarrow$ Reviewing $\rightarrow$ Confirmed / Error / Empty) cleanly in a reusable custom hook.
+- **Centralized State Machine Hook (`usePlanPlanner.ts`)**: Managed all state transitions (Prompting → Loading → Reviewing → Confirmed / Error / Empty) cleanly in a reusable custom hook.
 - **Full-Screen SaaS Workspace Experience**: Architected as a full-page app with a collapsible sidebar drawer (Claude / ChatGPT style) rather than a cramped modal dialog.
 
 ---
