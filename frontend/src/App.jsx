@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LandingPage from "./LandingPage";
+import LandingPage from "./components/landing/LandingPage";
 import { TravisPlannerPage } from "./components/planner/TravisPlannerPage";
 
 export default function App() {

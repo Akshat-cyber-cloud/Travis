@@ -151,9 +151,9 @@ export const PromptInput: React.FC<PromptInputProps> = ({
                 onChange={(e) => setPlanStyle(e.target.value as PlanStyleOption)}
                 aria-label="Select Plan Style"
               >
-                <option value="standard">⚡ Standard Plan</option>
-                <option value="detailed">📋 Detailed Roadmap</option>
-                <option value="agile">🏃 Agile Sprints</option>
+                <option value="standard">Standard Plan</option>
+                <option value="detailed">Detailed Roadmap</option>
+                <option value="agile">Agile Sprints</option>
               </select>
             </div>
 

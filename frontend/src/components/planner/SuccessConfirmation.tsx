@@ -37,7 +37,7 @@ export const SuccessConfirmation: React.FC<SuccessConfirmationProps> = ({ plan, 
         </svg>
       </div>
 
-      <span className="planner-success-pill">✅ Plan Confirmed & Activated</span>
+      <span className="planner-success-pill">Plan Confirmed & Activated</span>
       <h3 className="planner-success-title">Your Plan is Ready for Execution!</h3>
       <p className="planner-success-desc">
         All {plan.steps.length} task items have been reviewed, approved, and registered in your workspace.

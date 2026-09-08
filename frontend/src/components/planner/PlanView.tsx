@@ -35,7 +35,7 @@ export const PlanView: React.FC<PlanViewProps> = ({
               <span className="plan-badge">AI Plan Generated</span>
               {plan.style && (
                 <span className="plan-style-badge">
-                  {plan.style === 'detailed' ? '📋 Detailed Roadmap' : plan.style === 'agile' ? '🏃 Agile Sprints' : '⚡ Standard Plan'}
+                  {plan.style === 'detailed' ? 'Detailed Roadmap' : plan.style === 'agile' ? 'Agile Sprints' : 'Standard Plan'}
                 </span>
               )}
             </div>
