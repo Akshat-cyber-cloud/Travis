@@ -173,9 +173,9 @@ export const PlannerSidebar: React.FC<PlannerSidebarProps> = ({
 
       {/* ── User Profile Footer ── */}
       <div className="planner-sidebar-footer">
-        <div className="planner-user-avatar">J</div>
+        <div className="planner-user-avatar">G</div>
         <div className="planner-user-info">
-          <span className="planner-user-name">Jason M.</span>
+          <span className="planner-user-name">Guest User</span>
           <span className="planner-user-plan">Pro Plan Member</span>
         </div>
         <button className="planner-settings-btn" title="Planner settings">

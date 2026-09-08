@@ -7,7 +7,7 @@
   height: 100vh;
   width: 100vw;
   background-color: #fbfbfd;
-  background-image: 
+  background-image:
     radial-gradient(circle at 20% 15%, rgba(14, 165, 233, 0.07) 0%, transparent 40%),
     radial-gradient(circle at 80% 20%, rgba(132, 204, 22, 0.08) 0%, transparent 45%),
     radial-gradient(circle at 50% 80%, rgba(8, 9, 12, 0.02) 0%, transparent 50%);
@@ -34,8 +34,10 @@ body::-webkit-scrollbar {
 .planner-sidebar-scroll,
 .planner-page-content,
 body {
-  -ms-overflow-style: none !important; /* IE and Edge */
-  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE and Edge */
+  scrollbar-width: none !important;
+  /* Firefox */
 }
 
 /* ── SIDEBAR DRAWER (ChatGPT / Claude Style) ── */
@@ -449,15 +451,13 @@ body {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 35% 30%,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(224, 242, 254, 0.5) 35%,
-    rgba(186, 230, 253, 0.2) 65%,
-    rgba(255, 255, 255, 0.7) 100%
-  );
+  background: radial-gradient(circle at 35% 30%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(224, 242, 254, 0.5) 35%,
+      rgba(186, 230, 253, 0.2) 65%,
+      rgba(255, 255, 255, 0.7) 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 
+  box-shadow:
     0 14px 36px -8px rgba(14, 165, 233, 0.35),
     0 4px 12px rgba(8, 9, 12, 0.05),
     inset -6px -6px 16px rgba(2, 132, 199, 0.25),
@@ -606,7 +606,7 @@ body {
   border: 1.5px solid rgba(8, 9, 12, 0.12);
   border-radius: 22px;
   padding: 18px 20px;
-  box-shadow: 
+  box-shadow:
     0 8px 28px -6px rgba(8, 9, 12, 0.05),
     0 2px 6px rgba(8, 9, 12, 0.02);
   transition: all 0.25s ease;
@@ -614,7 +614,7 @@ body {
 
 .planner-input-card:focus-within {
   border-color: #38bdf8;
-  box-shadow: 
+  box-shadow:
     0 12px 36px -8px rgba(56, 189, 248, 0.22),
     0 0 0 4px rgba(56, 189, 248, 0.15);
 }
@@ -738,66 +738,177 @@ body {
 
 .planner-examples-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
 }
 
 .planner-example-card {
+  position: relative;
   background: #ffffff;
-  border: 1px solid rgba(8, 9, 12, 0.09);
-  border-radius: 18px;
-  padding: 16px 18px;
+  border: 1px solid rgba(8, 9, 12, 0.08);
+  border-radius: 20px;
+  padding: 18px;
   text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 104px;
+  min-height: 125px;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 3px 12px rgba(8, 9, 12, 0.02);
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(8, 9, 12, 0.03);
+}
+
+/* Ambient Radial Mesh Gradient overlays at top-right per variant */
+.planner-card-glow-bg {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.75;
+}
+
+.planner-example-card--launch .planner-card-glow-bg {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, rgba(2, 132, 199, 0.08) 50%, transparent 80%);
+}
+
+.planner-example-card--design .planner-card-glow-bg {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, rgba(147, 51, 234, 0.08) 50%, transparent 80%);
+}
+
+.planner-example-card--marketing .planner-card-glow-bg {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, rgba(217, 119, 6, 0.08) 50%, transparent 80%);
+}
+
+.planner-example-card--tech .planner-card-glow-bg {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(5, 150, 105, 0.08) 50%, transparent 80%);
 }
 
 .planner-example-card:hover {
-  background: #ffffff;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -8px rgba(8, 9, 12, 0.08);
+}
+
+.planner-example-card--launch:hover {
   border-color: rgba(56, 189, 248, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 22px -6px rgba(8, 9, 12, 0.08),
-    0 0 0 1px rgba(56, 189, 248, 0.2);
+  box-shadow: 0 12px 30px -8px rgba(56, 189, 248, 0.25);
 }
 
-.planner-example-text {
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: #1e293b;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  -webkit-font-smoothing: antialiased;
+.planner-example-card--design:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 12px 30px -8px rgba(168, 85, 247, 0.25);
 }
 
-.planner-example-footer {
+.planner-example-card--marketing:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 12px 30px -8px rgba(245, 158, 11, 0.25);
+}
+
+.planner-example-card--tech:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 12px 30px -8px rgba(16, 185, 129, 0.25);
+}
+
+.planner-example-card:hover .planner-card-glow-bg {
+  transform: scale(1.25);
+  opacity: 1;
+}
+
+/* Top Row: Theme Icon Badge & Sparkle Star */
+.planner-card-top-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 12px;
-  font-size: 12.5px;
-  color: #0284c7;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
 }
 
-.planner-example-icon {
+.planner-card-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0284c7;
   flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
-.planner-example-title {
+.planner-example-card--launch .planner-card-icon-badge {
+  background: rgba(56, 189, 248, 0.14);
+  color: #0284c7;
+}
+
+.planner-example-card--design .planner-card-icon-badge {
+  background: rgba(168, 85, 247, 0.14);
+  color: #9333ea;
+}
+
+.planner-example-card--marketing .planner-card-icon-badge {
+  background: rgba(245, 158, 11, 0.14);
+  color: #d97706;
+}
+
+.planner-example-card--tech .planner-card-icon-badge {
+  background: rgba(16, 185, 129, 0.14);
+  color: #059669;
+}
+
+.planner-card-sparkle-star {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.planner-example-card--launch .planner-card-sparkle-star {
+  color: #0284c7;
+}
+
+.planner-example-card--design .planner-card-sparkle-star {
+  color: #9333ea;
+}
+
+.planner-example-card--marketing .planner-card-sparkle-star {
+  color: #d97706;
+}
+
+.planner-example-card--tech .planner-card-sparkle-star {
+  color: #059669;
+}
+
+.planner-example-card:hover .planner-card-sparkle-star {
+  transform: rotate(45deg) scale(1.15);
+  opacity: 0.85;
+}
+
+/* Card Content: Title & Description */
+.planner-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  z-index: 2;
+}
+
+.planner-card-title {
   font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14.5px;
   font-weight: 700;
   color: #0f172a;
+  letter-spacing: -0.015em;
+}
+
+.planner-card-desc {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #475569;
+  font-weight: 500;
   letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ── PLAN VIEW & CARDS ── */
@@ -943,7 +1054,7 @@ body {
 
 .step-card:hover {
   border-color: rgba(132, 204, 22, 0.4);
-  box-shadow: 
+  box-shadow:
     0 8px 24px -4px rgba(8, 9, 12, 0.06),
     0 0 0 1px rgba(132, 204, 22, 0.15);
   transform: translateY(-2px);
@@ -1538,52 +1649,113 @@ body {
 
 /* Keyframe Animations */
 @keyframes pageFadeIn {
-  from { opacity: 0; transform: scale(0.99); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes orbFloat {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-6px); }
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes fluidRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes fluidFlow1 {
-  0% { transform: translateY(-10px) rotate(0deg) scale(0.95); }
-  50% { transform: translateY(8px) rotate(180deg) scale(1.1); }
-  100% { transform: translateY(-6px) rotate(360deg) scale(1); }
+  0% {
+    transform: translateY(-10px) rotate(0deg) scale(0.95);
+  }
+
+  50% {
+    transform: translateY(8px) rotate(180deg) scale(1.1);
+  }
+
+  100% {
+    transform: translateY(-6px) rotate(360deg) scale(1);
+  }
 }
 
 @keyframes fluidFlow2 {
-  0% { transform: translateX(-12px) rotate(0deg) scale(1.05); }
-  50% { transform: translateX(10px) rotate(-180deg) scale(0.9); }
-  100% { transform: translateX(-8px) rotate(-360deg) scale(1.05); }
+  0% {
+    transform: translateX(-12px) rotate(0deg) scale(1.05);
+  }
+
+  50% {
+    transform: translateX(10px) rotate(-180deg) scale(0.9);
+  }
+
+  100% {
+    transform: translateX(-8px) rotate(-360deg) scale(1.05);
+  }
 }
 
 @keyframes fluidFlow3 {
-  0% { transform: scale(0.9) rotate(0deg); opacity: 0.7; }
-  100% { transform: scale(1.15) rotate(180deg); opacity: 0.95; }
+  0% {
+    transform: scale(0.9) rotate(0deg);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1.15) rotate(180deg);
+    opacity: 0.95;
+  }
 }
 
 @keyframes orbPulse {
-  0% { transform: scale(0.9); opacity: 0.4; }
-  100% { transform: scale(1.2); opacity: 0.85; }
+  0% {
+    transform: scale(0.9);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: scale(1.2);
+    opacity: 0.85;
+  }
 }
 
 @keyframes pulseGlow {
-  0% { transform: scale(0.9); opacity: 0.7; }
-  100% { transform: scale(1.2); opacity: 1; }
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }

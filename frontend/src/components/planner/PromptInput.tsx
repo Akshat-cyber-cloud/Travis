@@ -195,21 +195,31 @@ export const PromptInput: React.FC<PromptInputProps> = ({
         </div>
       </div>
 
-      {/* ── Example Suggestions Grid (Screenshot 1) ── */}
+      {/* ── Example Suggestions Grid (Refined matching Dribbble Reference 1) ── */}
       <div className="planner-examples-wrap">
         <span className="planner-examples-label">GET STARTED WITH AN EXAMPLE BELOW</span>
         <div className="planner-examples-grid">
           {PRESET_EXAMPLES.map((item) => (
             <button
               key={item.id}
-              className={`planner-example-card ${activeChip === item.id ? 'selected' : ''}`}
+              className={`planner-example-card planner-example-card--${item.iconType} ${activeChip === item.id ? 'selected' : ''}`}
               onClick={() => handleChipClick(item)}
               disabled={isLoading}
             >
-              <p className="planner-example-text">{item.prompt}</p>
-              <div className="planner-example-footer">
-                <span className="planner-example-icon">{renderPresetIcon(item.iconType)}</span>
-                <span className="planner-example-title">{item.title}</span>
+              <div className="planner-card-glow-bg" />
+
+              <div className="planner-card-top-row">
+                <div className="planner-card-icon-badge">
+                  {renderPresetIcon(item.iconType)}
+                </div>
+                <svg className="planner-card-sparkle-star" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 9.41L12 0Z" fill="currentColor" opacity="0.45" />
+                </svg>
+              </div>
+
+              <div className="planner-card-content">
+                <h4 className="planner-card-title">{item.title}</h4>
+                <p className="planner-card-desc">{item.prompt}</p>
               </div>
             </button>
           ))}
