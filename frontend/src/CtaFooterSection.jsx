@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./CtaFooterSection.css";
 
-export default function CtaFooterSection() {
+export default function CtaFooterSection({ onOpenPlanner }) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -9,6 +9,9 @@ export default function CtaFooterSection() {
     e.preventDefault();
     if (email.trim()) {
       setSubmitted(true);
+      if (onOpenPlanner) {
+        onOpenPlanner();
+      }
     }
   };
 

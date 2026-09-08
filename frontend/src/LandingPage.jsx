@@ -12,9 +12,15 @@ import "./LandingPage.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function LandingPage() {
+export default function LandingPage({ onOpenPlanner }) {
   const heroRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const handleLaunchPlanner = (prompt) => {
+    if (onOpenPlanner) {
+      onOpenPlanner(prompt);
+    }
+  };
 
   /* ── 1. Lenis Luxury Smooth Scroll & GSAP Synchronization ── */
   useEffect(() => {
@@ -113,11 +119,11 @@ export default function LandingPage() {
           </ul>
 
           <div className="lp-island-actions">
-            <a href="#docs" className="lp-island-signin" onClick={(e) => scrollToSection(e, "docs")}>Sign in</a>
-            <a href="#contact" className="lp-island-cta" onClick={(e) => scrollToSection(e, "contact")}>
+            <a href="#planner" className="lp-island-signin" onClick={(e) => { e.preventDefault(); handleLaunchPlanner(); }}>Sign in</a>
+            <button className="lp-island-cta" onClick={() => handleLaunchPlanner()}>
               <span className="lp-island-cta-text">Try for free</span>
               <span className="lp-island-cta-arrow">↗</span>
-            </a>
+            </button>
           </div>
         </nav>
       </header>
@@ -168,8 +174,8 @@ export default function LandingPage() {
 
         {/* HERO CENTER CONTENT */}
         <div className="lp-hero__content">
-          <div className="lp-pill">
-            <span>Now in Early Access</span>
+          <div className="lp-pill" onClick={() => handleLaunchPlanner()} style={{ cursor: "pointer" }}>
+            <span>Now in Early Access — Try AI Planner</span>
             <span className="lp-pill__plus">✦</span>
           </div>
 
@@ -187,13 +193,13 @@ export default function LandingPage() {
           </p>
 
           <div className="lp-hero__cta-group">
-            <a href="#contact" className="lp-btn-split" onClick={(e) => scrollToSection(e, "contact")}>
+            <button className="lp-btn-split" onClick={() => handleLaunchPlanner()}>
               <span className="lp-btn-split__text">Get Started</span>
               <span className="lp-btn-split__icon">↗</span>
-            </a>
-            <a href="#product" className="lp-btn-hero-secondary" onClick={(e) => scrollToSection(e, "product")}>
-              See how it works
-            </a>
+            </button>
+            <button className="lp-btn-hero-secondary" onClick={() => handleLaunchPlanner()}>
+              See AI Planner
+            </button>
           </div>
 
           <p className="lp-hero__trust-note">No credit card required · Free to try</p>
@@ -222,8 +228,9 @@ export default function LandingPage() {
 
       {/* ── Section 5: CTA Waitlist Card & Footer ── */}
       <div id="contact">
-        <CtaFooterSection />
+        <CtaFooterSection onOpenPlanner={() => handleLaunchPlanner()} />
       </div>
     </div>
   );
 }
+
