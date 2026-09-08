@@ -1362,11 +1362,51 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 40px 24px;
+  padding: 40px 24px 32px;
   background: #ffffff;
   border-radius: 24px;
   border: 1px solid rgba(8, 9, 12, 0.09);
   box-shadow: 0 6px 24px rgba(8, 9, 12, 0.03);
+}
+
+.planner-success-badge-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(2, 132, 199, 0.08);
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.planner-success-pill {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #4a4f5c;
+  background: rgba(8, 9, 12, 0.05);
+  border-radius: 100px;
+  padding: 4px 12px;
+  margin-bottom: 10px;
+}
+
+.planner-success-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #08090c;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.planner-success-desc {
+  font-size: 14px;
+  color: #4a4f5c;
+  line-height: 1.55;
+  max-width: 420px;
+  margin: 0 0 24px;
 }
 
 .planner-loading-status {
