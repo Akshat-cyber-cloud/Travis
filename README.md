@@ -12,25 +12,6 @@ A full-page AI-powered Task Planner web application designed for **Travis AI**. 
 
 ![Travis AI Task Planner – Core User Flow](./workflow_diagram.jpg)
 
-```mermaid
-flowchart LR
-    A("✦ Natural Language Input\n─────────────────\nType your goal")
-    B("⟳ AI Reasoning\n─────────────────\nProcessing & classifying")
-    C("☑ Plan Generated\n─────────────────\nStructured steps created")
-    D("✎ Edit & Refine\n─────────────────\nCustomize your plan")
-    E("✔ Plan Confirmed\n─────────────────\nLocked & ready")
-    F("▶ Active Execution\n─────────────────\nTrack & complete")
-
-    A --> B --> C --> D --> E --> F
-
-    style A fill:#0c2d4a,stroke:#0284c7,stroke-width:2px,color:#fbfbfd
-    style B fill:#1a1040,stroke:#7c3aed,stroke-width:2px,color:#fbfbfd
-    style C fill:#0f2a14,stroke:#84cc16,stroke-width:2px,color:#fbfbfd
-    style D fill:#2a1a08,stroke:#f59e0b,stroke-width:2px,color:#fbfbfd
-    style E fill:#0f2a14,stroke:#84cc16,stroke-width:2px,color:#fbfbfd
-    style F fill:#0c2d4a,stroke:#0284c7,stroke-width:2px,color:#fbfbfd
-```
-
 > **6-stage journey**: Natural Language Input → AI Reasoning → Plan Generated → Edit & Refine → Plan Confirmed → Active Execution.
 
 ---
