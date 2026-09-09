@@ -12,6 +12,12 @@ export interface PlanStep {
   description: string;
   status: StepStatus;
   estimatedTime?: string;
+  isCollapsed?: boolean;
+}
+
+export interface UndoToastState {
+  step: PlanStep;
+  index: number;
 }
 
 export interface PlanData {
@@ -36,4 +42,14 @@ export interface ExamplePrompt {
   prompt: string;
   category: 'launch' | 'design' | 'marketing' | 'tech';
   icon: string;
+}
+
+export interface HistoryItem {
+  id: string;
+  title: string;
+  prompt: string;
+  timestamp: string;
+  timeFormatted: string;
+  group: 'Today' | 'Yesterday' | 'Previous 7 Days';
+  iconType: 'launch' | 'design' | 'marketing' | 'tech' | 'custom';
 }

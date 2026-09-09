@@ -8,10 +8,10 @@ interface PromptInputProps {
   isLoading: boolean;
   planStyle: PlanStyleOption;
   setPlanStyle: (style: PlanStyleOption) => void;
-  simulateErrorToggle: boolean;
-  setSimulateErrorToggle: (val: boolean) => void;
-  simulateEmptyToggle: boolean;
-  setSimulateEmptyToggle: (val: boolean) => void;
+  simulateErrorToggle?: boolean;
+  setSimulateErrorToggle?: (val: boolean) => void;
+  simulateEmptyToggle?: boolean;
+  setSimulateEmptyToggle?: (val: boolean) => void;
 }
 
 interface PresetsWithSvg extends Omit<ExamplePrompt, 'icon'> {
@@ -89,32 +89,54 @@ export const PromptInput: React.FC<PromptInputProps> = ({
   isLoading,
   planStyle,
   setPlanStyle,
-  simulateErrorToggle,
-  setSimulateErrorToggle,
-  simulateEmptyToggle,
-  setSimulateEmptyToggle,
 }) => {
   const [activeChip, setActiveChip] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  /**
+   * Step 1 requirement: Validate input on submit.
+   * If empty or whitespace-only, block submission & show inline validation message.
+   * Do NOT trigger loading state.
+   */
+  const handleFormSubmit = (customPrompt?: string) => {
+    const activeText = (customPrompt ?? prompt).trim();
+
+    if (!activeText) {
+      setValidationError('Please enter a goal or task prompt before generating a plan.');
+      return; // Block submission without triggering loading state
+    }
+
+    setValidationError(null);
+    onSubmit(activeText);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      if (prompt.trim() && !isLoading) {
-        onSubmit();
+      if (!isLoading) {
+        handleFormSubmit();
       }
+    }
+  };
+
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = e.target.value;
+    setPrompt(newText);
+    if (validationError && newText.trim()) {
+      setValidationError(null);
     }
   };
 
   const handleChipClick = (item: PresetsWithSvg) => {
     setActiveChip(item.id);
     setPrompt(item.prompt);
-    onSubmit(item.prompt);
+    handleFormSubmit(item.prompt);
   };
 
   return (
     <div className="planner-prompt-section">
-      {/* ── Main Input Box matching Genie Reference (Screenshot 1) ── */}
-      <div className="planner-input-card">
+      {/* ── Main Input Card ── */}
+      <div className={`planner-input-card ${validationError ? 'planner-input-card--invalid' : ''}`}>
         <div className="planner-input-body">
           <svg className="planner-sparkle-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
             <path
@@ -122,15 +144,29 @@ export const PromptInput: React.FC<PromptInputProps> = ({
               fill="currentColor"
             />
           </svg>
-          <textarea
-            className="planner-textarea"
-            placeholder="Ask AI a question or describe a task plan to accomplish..."
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            onKeyDown={handleKeyDown}
-            rows={3}
-            disabled={isLoading}
-          />
+
+          <div className="planner-textarea-wrapper">
+            <textarea
+              className="planner-textarea"
+              placeholder="Describe your goal or task roadmap to accomplish..."
+              value={prompt}
+              onChange={handleTextareaChange}
+              onKeyDown={handleKeyDown}
+              rows={3}
+              disabled={isLoading}
+            />
+
+            {/* Step 1: Inline validation message banner */}
+            {validationError && (
+              <div className="planner-input-validation-msg" role="alert">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v4M12 16h.01" strokeLinecap="round" />
+                </svg>
+                <span>{validationError}</span>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* ── Controls Toolbar ── */}
@@ -143,12 +179,13 @@ export const PromptInput: React.FC<PromptInputProps> = ({
               <span>Attach</span>
             </button>
 
-            {/* Fully Functional Plan Style Select Dropdown */}
+            {/* Plan Style Select Dropdown */}
             <div className="planner-select-wrapper">
               <select
                 className="planner-pill-btn planner-style-select"
                 value={planStyle}
                 onChange={(e) => setPlanStyle(e.target.value as PlanStyleOption)}
+                disabled={isLoading}
                 aria-label="Select Plan Style"
               >
                 <option value="standard">Standard Plan</option>
@@ -156,33 +193,14 @@ export const PromptInput: React.FC<PromptInputProps> = ({
                 <option value="agile">Agile Sprints</option>
               </select>
             </div>
-
-            {/* Empty response simulation toggle */}
-            <label className="planner-error-toggle" title="Toggle to simulate 0 steps returned for testing empty state">
-              <input
-                type="checkbox"
-                checked={simulateEmptyToggle}
-                onChange={(e) => setSimulateEmptyToggle(e.target.checked)}
-              />
-              <span>Simulate Empty</span>
-            </label>
-
-            {/* Error simulation toggle for testing candidate requirements */}
-            <label className="planner-error-toggle" title="Toggle to simulate API error state for testing">
-              <input
-                type="checkbox"
-                checked={simulateErrorToggle}
-                onChange={(e) => setSimulateErrorToggle(e.target.checked)}
-              />
-              <span>Simulate Error</span>
-            </label>
           </div>
 
           <button
             className={`planner-submit-btn ${prompt.trim() ? 'active' : ''}`}
-            onClick={() => onSubmit()}
-            disabled={!prompt.trim() || isLoading}
+            onClick={() => handleFormSubmit()}
+            disabled={isLoading}
             aria-label="Generate Plan"
+            title={isLoading ? 'Plan generation in progress' : 'Submit prompt to generate plan'}
           >
             {isLoading ? (
               <span className="planner-btn-spinner" />
@@ -195,23 +213,23 @@ export const PromptInput: React.FC<PromptInputProps> = ({
         </div>
       </div>
 
-      {/* ── Example Suggestions Grid (Refined matching Dribbble Reference 1) ── */}
+      {/* ── Example Suggestions Grid ── */}
       <div className="planner-examples-wrap">
         <span className="planner-examples-label">GET STARTED WITH AN EXAMPLE BELOW</span>
         <div className="planner-examples-grid">
           {PRESET_EXAMPLES.map((item) => (
             <button
               key={item.id}
-              className={`planner-example-card planner-example-card--${item.iconType} ${activeChip === item.id ? 'selected' : ''}`}
+              className={`planner-example-card planner-example-card--${item.iconType} ${
+                activeChip === item.id ? 'selected' : ''
+              }`}
               onClick={() => handleChipClick(item)}
               disabled={isLoading}
             >
               <div className="planner-card-glow-bg" />
 
               <div className="planner-card-top-row">
-                <div className="planner-card-icon-badge">
-                  {renderPresetIcon(item.iconType)}
-                </div>
+                <div className="planner-card-icon-badge">{renderPresetIcon(item.iconType)}</div>
                 <svg className="planner-card-sparkle-star" width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 9.41L12 0Z" fill="currentColor" opacity="0.45" />
                 </svg>

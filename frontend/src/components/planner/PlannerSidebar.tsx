@@ -1,66 +1,16 @@
 import React from 'react';
-
-interface HistoryItem {
-  id: string;
-  title: string;
-  prompt: string;
-  time: string;
-  category: string;
-  iconType: 'launch' | 'design' | 'marketing' | 'tech';
-}
+import { HistoryItem } from '../../types/plan';
 
 interface PlannerSidebarProps {
   isOpen: boolean;
   onToggle: () => void;
   onSelectHistory: (prompt: string) => void;
+  onDeleteHistoryItem?: (id: string) => void;
+  onClearHistory?: () => void;
+  historyList: HistoryItem[];
   onNewPlan: () => void;
   onBackToHome: () => void;
 }
-
-const RECENT_HISTORY: { group: string; items: HistoryItem[] }[] = [
-  {
-    group: 'Today',
-    items: [
-      {
-        id: 'h1',
-        title: 'Mobile App Launch Plan',
-        prompt: 'Help me plan a product launch for a new mobile app.',
-        time: '10m ago',
-        category: 'launch',
-        iconType: 'launch',
-      },
-      {
-        id: 'h2',
-        title: 'Design System & UI Roadmap',
-        prompt: 'Create a roadmap for building a design system and UI components.',
-        time: '2h ago',
-        category: 'design',
-        iconType: 'design',
-      },
-    ],
-  },
-  {
-    group: 'Yesterday',
-    items: [
-      {
-        id: 'h3',
-        title: 'Q4 Growth Strategy',
-        prompt: 'Draft a marketing strategy for scaling high-intent user acquisition.',
-        time: 'Yesterday',
-        category: 'marketing',
-        iconType: 'marketing',
-      },
-      {
-        id: 'h4',
-        title: 'Tech Stack React Upgrade',
-        prompt: 'Outline a plan for refactoring web architecture to TypeScript & React 19.',
-        time: 'Yesterday',
-        category: 'tech',
-        iconType: 'tech',
-      },
-    ],
-  },
-];
 
 const renderCategoryIcon = (type: HistoryItem['iconType']) => {
   switch (type) {
@@ -104,9 +54,33 @@ export const PlannerSidebar: React.FC<PlannerSidebarProps> = ({
   isOpen,
   onToggle,
   onSelectHistory,
+  onDeleteHistoryItem,
+  onClearHistory,
+  historyList,
   onNewPlan,
   onBackToHome,
 }) => {
+  // Group history items dynamically
+  const groupsOrder: HistoryItem['group'][] = ['Today', 'Yesterday', 'Previous 7 Days'];
+
+  const groupedSections = groupsOrder
+    .map((groupName) => ({
+      group: groupName,
+      items: historyList.filter((item) => item.group === groupName),
+    }))
+    .filter((sec) => sec.items.length > 0);
+
+  // Catch any items that have custom/other group names
+  const knownGroups = new Set(groupsOrder);
+  const otherItems = historyList.filter((item) => !knownGroups.has(item.group));
+
+  if (otherItems.length > 0) {
+    groupedSections.push({
+      group: 'Previous 7 Days',
+      items: otherItems,
+    });
+  }
+
   return (
     <aside className={`planner-sidebar ${isOpen ? 'open' : 'closed'}`}>
       {/* ── Sidebar Top Branding & Inner Toggle Button ── */}
@@ -147,28 +121,61 @@ export const PlannerSidebar: React.FC<PlannerSidebarProps> = ({
         </button>
       </div>
 
-      {/* ── Chat History Groups ── */}
+      {/* ── Dynamic Chat History Scroll Area ── */}
       <div className="planner-sidebar-scroll">
-        {RECENT_HISTORY.map((section) => (
-          <div key={section.group} className="planner-history-group">
-            <span className="planner-history-section-title">{section.group}</span>
-            <div className="planner-history-list">
-              {section.items.map((item) => (
-                <button
-                  key={item.id}
-                  className="planner-history-item"
-                  onClick={() => onSelectHistory(item.prompt)}
-                >
-                  <span className="planner-history-icon">{renderCategoryIcon(item.iconType)}</span>
-                  <div className="planner-history-text">
-                    <span className="planner-history-item-title">{item.title}</span>
-                    <span className="planner-history-time">{item.time}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+        <div className="planner-sidebar-history-top">
+          <span className="planner-sidebar-history-heading">Recents ({historyList.length})</span>
+          {historyList.length > 0 && onClearHistory && (
+            <button className="planner-clear-history-btn" onClick={onClearHistory} title="Clear all history">
+              Clear
+            </button>
+          )}
+        </div>
+
+        {groupedSections.length === 0 ? (
+          <div className="planner-sidebar-empty-history">
+            <span>No previous plan requests</span>
           </div>
-        ))}
+        ) : (
+          groupedSections.map((section) => (
+            <div key={section.group} className="planner-history-group">
+              <span className="planner-history-section-title">{section.group}</span>
+              <div className="planner-history-list">
+                {section.items.map((item) => (
+                  <div key={item.id} className="planner-history-item-wrap">
+                    <button
+                      className="planner-history-item"
+                      onClick={() => onSelectHistory(item.prompt)}
+                      title={`Load prompt: "${item.prompt}"`}
+                    >
+                      <span className="planner-history-icon">{renderCategoryIcon(item.iconType)}</span>
+                      <div className="planner-history-text">
+                        <span className="planner-history-item-title">{item.title}</span>
+                        <span className="planner-history-time">{item.timeFormatted}</span>
+                      </div>
+                    </button>
+
+                    {onDeleteHistoryItem && (
+                      <button
+                        className="planner-history-delete-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDeleteHistoryItem(item.id);
+                        }}
+                        title="Delete from history"
+                        aria-label="Delete history item"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* ── User Profile Footer ── */}

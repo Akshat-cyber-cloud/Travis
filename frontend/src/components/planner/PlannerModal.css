@@ -190,6 +190,45 @@ body {
   gap: 16px;
 }
 
+.planner-sidebar-history-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 4px 4px;
+}
+
+.planner-sidebar-history-heading {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.planner-clear-history-btn {
+  background: transparent;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.planner-clear-history-btn:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.planner-sidebar-empty-history {
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
 .planner-history-group {
   display: flex;
   flex-direction: column;
@@ -209,6 +248,38 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+
+.planner-history-item-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.planner-history-delete-btn {
+  position: absolute;
+  right: 6px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.planner-history-item-wrap:hover .planner-history-delete-btn {
+  opacity: 1;
+}
+
+.planner-history-delete-btn:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .planner-history-item {
@@ -617,6 +688,32 @@ body {
   box-shadow:
     0 12px 36px -8px rgba(56, 189, 248, 0.22),
     0 0 0 4px rgba(56, 189, 248, 0.15);
+}
+
+.planner-input-card--invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12) !important;
+}
+
+.planner-textarea-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.planner-input-validation-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #dc2626;
+  background: rgba(254, 242, 242, 0.9);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  animation: toastSlideUp 0.2s ease-out;
 }
 
 .planner-textarea {
@@ -1798,4 +1895,461 @@ body {
   100% {
     background-position: -200% 0;
   }
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW ENHANCEMENTS: Progressive Disclosure, Inline Editing,
+   Undo Toast, Rich Empty State & Locked Execution Mode
+   ══════════════════════════════════════════════════════ */
+
+/* Progressive Disclosure & Hierarchy Header Actions */
+.plan-steps-heading-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.plan-count-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 9, 12, 0.07);
+  color: #08090c;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  margin-left: 6px;
+}
+
+.plan-collapse-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid rgba(8, 9, 12, 0.12);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a4f5c;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(8, 9, 12, 0.04);
+}
+
+.plan-collapse-all-btn:hover {
+  background: rgba(8, 9, 12, 0.04);
+  color: #08090c;
+  border-color: rgba(8, 9, 12, 0.25);
+}
+
+/* Step Card Visual Hierarchy & Controls */
+.step-meta-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  opacity: 0.8;
+  transition: opacity 0.15s ease;
+}
+
+.step-card:hover .step-meta-controls {
+  opacity: 1;
+}
+
+.step-collapse-btn {
+  background: transparent;
+  border: none;
+  color: #7c8292;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.step-collapse-btn:hover {
+  background: rgba(8, 9, 12, 0.06);
+  color: #08090c;
+}
+
+/* Editable affordances */
+.step-title--editable {
+  cursor: pointer;
+}
+
+.step-title-text {
+  transition: color 0.15s ease;
+}
+
+.step-title--editable:hover .step-title-text {
+  color: #0284c7;
+}
+
+.step-edit-icon-svg {
+  display: inline-flex;
+  align-items: center;
+  color: #94a3b8;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.step-title:hover .step-edit-icon-svg {
+  opacity: 0.8;
+  color: #0284c7;
+}
+
+.step-desc--editable {
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.step-desc--editable:hover {
+  color: #0284c7;
+}
+
+/* Inline Editing Distinct Visual State */
+.step-card--editing {
+  background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%) !important;
+  border-color: #0284c7 !important;
+  box-shadow:
+    0 8px 24px -4px rgba(2, 132, 199, 0.2),
+    0 0 0 2px rgba(2, 132, 199, 0.25) !important;
+  transform: translateY(-2px);
+}
+
+.step-editing-banner {
+  margin-bottom: 8px;
+}
+
+.step-editing-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: rgba(2, 132, 199, 0.12);
+  border: 1px solid rgba(2, 132, 199, 0.3);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0284c7;
+  letter-spacing: 0.01em;
+}
+
+/* Locked & Confirmed Plan Styling */
+.plan-badge--locked {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  color: #059669 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.plan-unlock-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #059669;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.plan-unlock-btn:hover {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: #059669;
+}
+
+.step-card--locked {
+  background: #fbfbfd;
+}
+
+.step-card--locked:hover {
+  border-color: rgba(8, 9, 12, 0.15);
+  transform: none;
+}
+
+.plan-progress-fill--active {
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%) !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.6) !important;
+}
+
+.plan-confirmed-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 16px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
+}
+
+.plan-confirmed-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #059669;
+}
+
+.plan-status-dot-active {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.plan-confirm-btn--locked {
+  width: auto;
+  height: 42px;
+  padding: 0 20px;
+  background: #059669;
+}
+
+.plan-confirm-btn--locked:hover {
+  background: #047857;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
+}
+
+/* Floating Undo Toast Notification */
+.plan-undo-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  background: #08090c;
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow:
+    0 14px 36px rgba(8, 9, 12, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: toastSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  min-width: 320px;
+}
+
+.plan-undo-toast-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.plan-undo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f87171;
+}
+
+.plan-undo-msg {
+  font-size: 13px;
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+.plan-undo-toast-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.plan-undo-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.plan-undo-btn:hover {
+  background: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.plan-undo-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan-undo-close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.plan-undo-progress-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #38bdf8 0%, #0284c7 100%);
+  animation: undoCountdown 5s linear forwards;
+}
+
+@keyframes undoCountdown {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes toastSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Rich Empty State Card */
+.plan-empty-state-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 36px 24px;
+  background: #ffffff;
+  background-image: radial-gradient(circle at 50% 30%, rgba(14, 165, 233, 0.05) 0%, transparent 60%);
+  border: 1.5px dashed rgba(8, 9, 12, 0.15);
+  border-radius: 22px;
+  margin: 8px 0;
+}
+
+.plan-empty-illustration {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan-empty-icon-halo {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(224, 242, 254, 0.8) 0%, rgba(240, 249, 255, 0.5) 100%);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px -4px rgba(14, 165, 233, 0.25);
+}
+
+.plan-empty-sparkle-1 {
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  color: #38bdf8;
+  font-size: 14px;
+  animation: pulseGlow 1.8s ease-in-out infinite alternate;
+}
+
+.plan-empty-sparkle-2 {
+  position: absolute;
+  bottom: 0px;
+  left: -4px;
+  color: #84cc16;
+  font-size: 12px;
+  animation: pulseGlow 2.4s ease-in-out infinite alternate;
+}
+
+.plan-empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #08090c;
+  margin-bottom: 6px;
+}
+
+.plan-empty-desc {
+  font-size: 13.5px;
+  color: #64748b;
+  max-width: 440px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.plan-empty-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.plan-empty-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.plan-empty-btn.primary {
+  background: #08090c;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 14px rgba(8, 9, 12, 0.15);
+}
+
+.plan-empty-btn.primary:hover {
+  background: #0284c7;
+  transform: translateY(-1px);
+}
+
+.plan-empty-btn.secondary {
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid rgba(8, 9, 12, 0.12);
+}
+
+.plan-empty-btn.secondary:hover {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(8, 9, 12, 0.25);
 }

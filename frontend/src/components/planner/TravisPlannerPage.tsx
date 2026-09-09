@@ -27,19 +27,25 @@ export const TravisPlannerPage: React.FC<TravisPlannerPageProps> = ({
     plan,
     error,
     isConfirmed,
+    isLocked,
     planStyle,
     setPlanStyle,
-    simulateErrorToggle,
-    setSimulateErrorToggle,
-    simulateEmptyToggle,
-    setSimulateEmptyToggle,
+    undoToast,
+    historyList,
+    handleDeleteHistoryItem,
+    handleClearHistory,
     handleGeneratePlan,
     handleRetry,
     handleUpdateStep,
     handleToggleStepStatus,
+    handleToggleStepCollapse,
+    handleToggleCollapseAll,
     handleAddStep,
     handleDeleteStep,
+    handleUndoDelete,
+    handleDismissUndoToast,
     handleConfirmPlan,
+    handleToggleLock,
     handleReset,
   } = usePlanPlanner();
 
@@ -63,6 +69,9 @@ export const TravisPlannerPage: React.FC<TravisPlannerPageProps> = ({
         isOpen={isSidebarOpen}
         onToggle={() => setIsSidebarOpen(false)}
         onSelectHistory={handleSelectHistoryPrompt}
+        onDeleteHistoryItem={handleDeleteHistoryItem}
+        onClearHistory={handleClearHistory}
+        historyList={historyList}
         onNewPlan={handleReset}
         onBackToHome={onBackToHome}
       />
@@ -72,7 +81,6 @@ export const TravisPlannerPage: React.FC<TravisPlannerPageProps> = ({
         {/* ── Top Navigation Bar ── */}
         <header className="planner-top-navbar">
           <div className="planner-nav-left">
-            {/* Show toggle button in top navbar ONLY when sidebar is collapsed */}
             {!isSidebarOpen && (
               <button
                 className="planner-sidebar-toggle-btn"
@@ -120,6 +128,13 @@ export const TravisPlannerPage: React.FC<TravisPlannerPageProps> = ({
             ) : (status === 'success' || status === 'empty') && plan ? (
               <PlanView
                 plan={plan}
+                isLocked={isLocked}
+                undoToast={undoToast}
+                onUndoDelete={handleUndoDelete}
+                onDismissUndo={handleDismissUndoToast}
+                onToggleStepCollapse={handleToggleStepCollapse}
+                onToggleCollapseAll={handleToggleCollapseAll}
+                onToggleLock={handleToggleLock}
                 onUpdateStep={handleUpdateStep}
                 onToggleStatus={handleToggleStepStatus}
                 onAddStep={handleAddStep}
@@ -135,10 +150,6 @@ export const TravisPlannerPage: React.FC<TravisPlannerPageProps> = ({
                 isLoading={false}
                 planStyle={planStyle}
                 setPlanStyle={setPlanStyle}
-                simulateErrorToggle={simulateErrorToggle}
-                setSimulateErrorToggle={setSimulateErrorToggle}
-                simulateEmptyToggle={simulateEmptyToggle}
-                setSimulateEmptyToggle={setSimulateEmptyToggle}
               />
             )}
           </div>
