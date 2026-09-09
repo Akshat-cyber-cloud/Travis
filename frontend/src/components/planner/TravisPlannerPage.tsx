@@ -7,6 +7,7 @@ import { LoadingState } from './LoadingState';
 import { ErrorState } from './ErrorState';
 import { SuccessConfirmation } from './SuccessConfirmation';
 import { PlannerSidebar } from './PlannerSidebar';
+import { OnboardingTour } from './OnboardingTour';
 import './PlannerModal.css';
 
 interface TravisPlannerPageProps {
@@ -19,6 +20,22 @@ export const TravisPlannerPage: React.FC<TravisPlannerPageProps> = ({
   initialPrompt = '',
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+
+  // Show onboarding tour on first visit
+  const [showTour, setShowTour] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('travis_tour_seen') !== 'true';
+    } catch {
+      return true;
+    }
+  });
+
+  const handleTourComplete = () => {
+    setShowTour(false);
+    try {
+      localStorage.setItem('travis_tour_seen', 'true');
+    } catch { /* ignore */ }
+  };
 
   const {
     prompt,
@@ -64,6 +81,8 @@ export const TravisPlannerPage: React.FC<TravisPlannerPageProps> = ({
 
   return (
     <div className={`planner-page-root ${isSidebarOpen ? 'has-sidebar' : 'no-sidebar'}`}>
+      {/* ── First-visit onboarding tour ── */}
+      {showTour && <OnboardingTour onComplete={handleTourComplete} />}
       {/* ── Left Collapsible History Sidebar ── */}
       <PlannerSidebar
         isOpen={isSidebarOpen}
